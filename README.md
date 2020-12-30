@@ -61,7 +61,7 @@ goveeApi colortem 0 2000
 
 This should make the device with the iid of 0 display a warm white colour.
 
-## Installation Guide (v1.0.0)
+## Installation Guide (v1.1.0)
 
 > This release may be blocked by your anti-virus software, Microsoft Defender marks the software as [Trojan:Win32/Fuerboos.D!cl](https://go.microsoft.com/fwlink/p/?linkid=849967&Name=Trojan:Win32/Fuerboos.D!cl). This issue has been reported to Microsoft, if your antivirus software marks as dangerous too, let me know by creating an issue!
 
