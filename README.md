@@ -44,7 +44,7 @@ goveeApi brightness 0 50
 This should make the device with the iid of 0 have a brightness of 50%
 
 ### Change Device Colour
-The colour of your device should be changed using the **color** command followed by the device's iid and the requested colour in a hexadecimal format (#RRGGBB) if you are stuck for colours, you can find some [here](https://htmlcolorcodes.com/).
+The colour of your device should be changed using the **color** command followed by the device's iid and the requested colour in a hexadecimal format (#RRGGBB) if you are stuck for colours, you can find some [here](https://htmlcolorcodes.com/) There are a few colours you can also use such as **red**, **green**, **blue**, and **purple** etc.
 
 ```
 goveeApi color 0 #0067f4
