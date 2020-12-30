@@ -1,6 +1,9 @@
 # Govee-API
 Manage your Govee connected devices using the command line on your PC! 
 
+## Supported Devices
+Not all of Govee's products can be accessed from the internet. Official Govee documentation states only these devices can be controlled by this CLI: H6160, H6163, H6104, H6109, H6110, H6117, H6159, H7021, H7022, H6086, H6089, H6182, H6085, H7014, H5081, H6188, H6135, H6137, H6141, H6142, H6195, H6196, H7005, H6083, H6002, H6003, H6148.
+
 ## Notice
 This software is in no way affiliated with Govee and was created in Python using Govee's Developer API. A personal access token is required to run this project, you can acquire one by going to About Us-> Request API Key in the Govee Home app!
 
