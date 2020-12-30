@@ -1,24 +1,22 @@
 import os
+import pathlib
 
 import requests
 import json
 import click
 
+import contextVars
+
 __author__ = "jack-txt & HarryDev06"
-
-
-class Context(object):
-    def __init__(self, devices, key):
-        self.devices = devices
-        self.apiKey = key
 
 
 @click.group()
 @click.pass_context
 def main(ctx):
     """
-    Govee API
-    Project Source: https://github.com/jack-txt/govee-api
+    Govee API v1.1.0 by jack-txt & HarryDev06
+
+    THIS PRODUCT IS NOT AFFILIATED WITH GOVEE
     """
 
     key = os.environ.get('GOVEE_KEY')
@@ -28,7 +26,40 @@ def main(ctx):
     headers = {'Govee-API-Key': key}
     r = requests.get(url, headers=headers)
 
-    ctx.obj = Context(json.loads(r.content)["data"]["devices"], key)
+    ctx.obj = contextVars.Context(json.loads(r.content)["data"]["devices"], key)
+
+
+@main.command()
+def viewlicense():
+    "GNU General Public License v3.0"
+    f = open(os.path.join(pathlib.Path(__file__).parent.absolute(), "LICENSE"), "r")
+    click.echo_via_pager(f.read())
+
+
+@main.command()
+def viewrepo():
+    "Open the repo in your browser"
+    click.echo("Opening Repository in browser")
+    click.launch("https://github.com/jack-txt/govee-api")
+    click.echo("Launched")
+
+
+@main.command()
+def giraffe():
+    "Prints a giraffe to the screen"
+    print("""\
+
+                                           ._ o o
+                                           \_`-)|_
+                                        ,""       \ 
+                                      ,"  ## |   ಠ ಠ. 
+                                    ," ##   ,-\__    `.
+                                  ,"       /     `--._;)
+                                ,"     ## /
+                              ,"   ##    /
+
+
+                        """)
 
 
 @main.command()
@@ -62,7 +93,7 @@ def listdevices(ctx):
 @click.pass_obj
 def turn(ctx, iid, state):
     """
-    Turn a device on or off.
+    Turn a device on or off
     """
 
     safe = True
@@ -71,11 +102,11 @@ def turn(ctx, iid, state):
         deviceID = ctx.devices[int(iid)]["device"]
         model = ctx.devices[int(iid)]["model"]
     except IndexError:
-        print("Couldn't find device " + iid + ", run listdevices to see the devices on your account.")
+        click.echo("Couldn't find device " + iid + ", run listdevices to see the devices on your account.", err=True)
         safe = False
 
     if str(state) != "on" and str(state) != "off" and safe:
-        print(state + " is not valid! [on/off]")
+        click.echo(state + " is not valid! [on/off]", err=True)
         safe = False
 
     if safe:
@@ -86,6 +117,7 @@ def turn(ctx, iid, state):
         r = requests.put(url, data=jsonToSend, headers=headers)
 
         if r.status_code == 200:
+            click.secho('Success', fg='green', bold=True)
             click.echo("Device with iid " + str(iid) + " (" + model + ") was turned " + state)
         else:
             click.echo(
@@ -108,11 +140,11 @@ def brightness(ctx, iid, value):
         deviceID = ctx.devices[int(iid)]["device"]
         model = ctx.devices[int(iid)]["model"]
     except IndexError:
-        print("Couldn't find device " + iid + ", run listdevices to see the devices on your account.")
+        click.echo("Couldn't find device " + iid + ", run listdevices to see the devices on your account.", err=True)
         safe = False
 
     if not 0 < int(value) <= 100 and safe:
-        print(value + " must be a whole number and between 0 and 100")
+        click.echo(value + " must be a whole number and between 0 and 100", err=True)
         safe = False
 
     if safe:
@@ -123,10 +155,11 @@ def brightness(ctx, iid, value):
         r = requests.put(url, data=jsonToSend, headers=headers)
 
         if r.status_code == 200:
+            click.secho('Success', fg='green', bold=True)
             click.echo("Device with iid " + str(iid) + " (" + model + ") was set to " + value + "% brightness")
         else:
             click.echo("There was an error while attempting to set brightness on device " + str(
-                iid) + " to " + value + "% [Error code: " + str(r.status_code) + "]")
+                iid) + " to " + value + "% [Error code: " + str(r.status_code) + "]", err=True)
 
 
 @main.command()
@@ -169,7 +202,7 @@ def color(ctx, iid, color):
         deviceID = ctx.devices[int(iid)]["device"]
         model = ctx.devices[int(iid)]["model"]
     except IndexError:
-        print("Couldn't find device " + iid + ", run listdevices to see the devices on your account.")
+        click.echo("Couldn't find device " + iid + ", run listdevices to see the devices on your account.", err=True)
         safe = False
 
     hexadec_in = hexadec
@@ -183,19 +216,19 @@ def color(ctx, iid, color):
     try:
         red = str(int(colors[0], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
+        click.echo("Please enter a valid hexadecimal string, in format #RRGGBB or a color name", err=True)
         safe = False
 
     try:
         green = str(int(colors[1], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
+        click.echo("Please enter a valid hexadecimal string, in format #RRGGBB or a color name", err=True)
         safe = False
 
     try:
         blue = str(int(colors[2], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
+        click.echo("Please enter a valid hexadecimal string, in format #RRGGBB or a color name", err=True)
         safe = False
 
     if safe:
@@ -206,10 +239,11 @@ def color(ctx, iid, color):
         r = requests.put(url, data=jsonToSend, headers=headers)
 
         if r.status_code == 200:
+            click.secho('Success', fg='green', bold=True)
             click.echo("Device with iid " + str(iid) + " (" + model + ") was set to color to " + hexadec_in)
         else:
             click.echo("There was an error while attempting to set color on device " + str(
-                iid) + " to " + hexadec + " [Error code: " + str(r.status_code) + "]")
+                iid) + " to " + hexadec + " [Error code: " + str(r.status_code) + "]", err=True)
 
 
 @main.command()
@@ -227,11 +261,11 @@ def colortem(ctx, iid, value):
         deviceID = ctx.devices[int(iid)]["device"]
         model = ctx.devices[int(iid)]["model"]
     except IndexError:
-        print("Couldn't find device " + iid + ", run listdevices to see the devices on your account.")
+        click.echo("Couldn't find device " + iid + ", run listdevices to see the devices on your account.", err=True)
         safe = False
 
     if not 2000 <= int(value) <= 9000 and safe:
-        print(value + " must be a whole number and between 2000 and 9000")
+        click.echo(value + " must be a whole number and between 2000 and 9000", err=True)
         safe = False
 
     if safe:
@@ -242,10 +276,11 @@ def colortem(ctx, iid, value):
         r = requests.put(url, data=jsonToSend, headers=headers)
 
         if r.status_code == 200:
+            click.secho('Success', fg='green', bold=True)
             click.echo("Device with iid " + str(iid) + " (" + model + ") was set to temperature value " + value)
         else:
             click.echo("There was an error while attempting to set temperature value on device " + str(
-                iid) + " to " + value + " [Error code: " + str(r.status_code) + "]")
+                iid) + " to " + value + " [Error code: " + str(r.status_code) + "]", err=True)
 
 
 if __name__ == "__main__":
