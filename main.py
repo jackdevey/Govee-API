@@ -4,7 +4,7 @@ import requests
 import json
 import click
 
-__author__ = "jack-txt"
+__author__ = "jack-txt & HarryDev06"
 
 
 class Context(object):
@@ -131,12 +131,27 @@ def brightness(ctx, iid, value):
 
 @main.command()
 @click.argument("iid", metavar='<iid>')
-@click.argument("hexadec", metavar='<hexadec>')
+@click.argument("color", metavar='<color>')
 @click.pass_obj
-def color(ctx, iid, hexadec):
+def color(ctx, iid, color):
     """
     Change the color of a device
     """
+
+    if color == "red":
+        hexadec = "#ff0000"
+    elif color == "green":
+        hexadec = "#00ff00"
+    elif color == "blue":
+        hexadec = "#0000ff"
+    elif color == "purple":
+        hexadec = "#B200FF"
+    elif color == "orange":
+        hexadec = "#FFA200"
+    elif color == "skyblue":
+        hexadec = "#00E8FF"
+    else:
+        hexadec = color
 
     safe = True
 
@@ -158,19 +173,19 @@ def color(ctx, iid, hexadec):
     try:
         red = str(int(colors[0], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB")
+        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
         safe = False
 
     try:
         green = str(int(colors[1], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB")
+        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
         safe = False
 
     try:
         blue = str(int(colors[2], 16))
     except ValueError:
-        print("Please enter a valid hexadecimal string, in format #RRGGBB")
+        print("Please enter a valid hexadecimal string, in format #RRGGBB or a color name")
         safe = False
 
     if safe:
