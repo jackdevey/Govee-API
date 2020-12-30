@@ -150,6 +150,16 @@ def color(ctx, iid, color):
         hexadec = "#FFA200"
     elif color == "skyblue":
         hexadec = "#00E8FF"
+    elif color == "lime":
+        hexadec = "#4DFF00"
+    elif color == "computub":
+        hexadec = "#0067f4"
+    elif color == "bandev":
+        hexadec = "#5E17EB"
+    elif color == "buddha-quotes":
+        hexadec = "#E80054"
+    elif color == "labyrinth":
+        hexadec = "#0067f4"
     else:
         hexadec = color
 
