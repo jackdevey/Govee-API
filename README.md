@@ -91,7 +91,7 @@ Open a command line and run the command `goveeApi` and you should see the help p
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                     Version 2, December 2004
 
- Copyright (C) 2020 Jack William Devey <jack@bandev.uk>
+ Copyright (C) 2020 Jack Devey <jack@bandev.uk>
 
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document, and changing it is allowed as long
