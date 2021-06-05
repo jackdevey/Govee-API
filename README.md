@@ -1,3 +1,5 @@
+> This repository is now deprecated. Instead please use [BanDev/Lux](https://github.com/BanDev/Lux) for an updated version.
+
 # Govee-API
 Manage your Govee connected devices using the command line on your PC! 
 
